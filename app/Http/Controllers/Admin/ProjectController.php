@@ -14,21 +14,23 @@ class ProjectController extends Controller
     // validazioni racchiuse in variabili private
 
     private $validations = [
-            'title'=> 'required|string|min:5|max:100',
-            'type_id' =>'required|integer|exists:types,id',
-            'url_image'=> 'required|url|max:200',
-            'image'=> 'nullable|image|max:1024',
-            'repo'=> 'required|string|min:5|max:100',
-            'languages'=> 'required|string|min:5|max:100',
-            'description'=> 'required|string|min:5',
-    ];
 
-    private $validation_messages = [
-            'required' => 'il campo è obbligatorio',
-            'min' => 'il campo contrassegnato richiede :min caratteri',
-            'max' => 'il campo contrassegnato richiede :max caratteri',
-            'url' => 'il campo contrassegnato deve essere un url valido',
-            'exists' => 'il campo non è valido',
+        'type_id' => "required|integer|exists:types,id",
+        'title' => 'required|string|min:5|max:50',
+        'creation_date' => 'required|date|max:20',
+        'last_update' => 'required|date|max:20',
+        'author' => 'required|string|max:30',
+        'image' => 'nullable|image|max:1024',
+        'description' => 'nullable|string|',
+        'technologies. *'   => 'integer|exists:technologies,id',
+
+    ];
+    private $validations_messages = [
+        'required' => 'il campo :attribute è obbligatorio',
+        'min' => 'il campo :attribute deve avere minimo :min caratteri',
+        'max' => 'il campo :attribute non può superare i :max caratteri',
+        'url' => 'il campo deve essere un url valido',
+        'exists' => 'Valore non valido'
     ];
     /**
      * Display a listing of the resource.
@@ -64,15 +66,15 @@ class ProjectController extends Controller
 
         $imagePath = Storage::put('uploads', $data['image']);
 
-        $newProject = new Project();
-        $newProject->title          = $data['title'];
-        $newProject->slug           = Project::slugger($data["title"]);
-        $newProject->type_id        = $data['type_id'];
-        $newProject->url_image      = $data['url_image'];
-        $newProject->repo           = $data['repo'];
-        $newProject->languages      = $data['languages'];
-        $newProject->description    = $data['description'];
-        $newProject->image          = $imagePath;
+        
+        $newProject->type_id = $data['type_id'];
+        $newProject->title = $data['title'];
+        $newProject->slug = Project::slugger($data['title']);
+        $newProject->creation_date = $data['creation_date'];
+        $newProject->last_update = $data['last_update'];
+        $newProject->author = $data['author'];
+        $newProject->image = $image;
+        $newProject->description = $data['description'];
         $newProject->save();
 
         $newProject->technologies()->sync($data["technologies"] ?? []);
@@ -138,11 +140,11 @@ class ProjectController extends Controller
         }
 
         // salvare i dati se corretti
-        $project->title = $data['title'];
         $project->type_id = $data['type_id'];
-        $project->url_image = $data['url_image'];
-        $project->repo = $data['repo'];
-        $project->languages = $data['languages'];
+        $project->title = $data['title'];
+        $project->creation_date = $data['creation_date'];
+        $project->last_update = $data['last_update'];
+        $project->author = $data['author'];
         $project->description = $data['description'];
         $project->update();
 

@@ -29,12 +29,13 @@
             <tr>
                 <th scope="row">{{ $project->id }}</th>
                 <td>{{ $project->title }}</td>
-                <td>{{ $project->url_image }}</td>
                 <td>{{ $project->languages }}</td>
                 <td><a href="{{ route("admin.types.show", ["type" => $project->type]) }}">{{ $project->type->name }}</a></td>
 
                 <td>{{ implode(', ', $project->technologies->pluck('name')->all()) }}</td>
                 <td>{{ $project->description }}</td>
+                <td><img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}"></td>
+
                 <td>
                     <div class="d-flex">
                         <a class="btn btn-primary" href="{{ route('admin.projects.show', ['project' => $project]) }}">View</a>
