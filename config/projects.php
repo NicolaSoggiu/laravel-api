@@ -10,12 +10,12 @@ return [
     ],
 
     [
-        "image" => "uploads/third.htm",
+        "image" => "uploads/third.jpg",
 
     ],
 
     [
-        "image" => "uploads/fourth.htm",
+        "image" => "uploads/fourth.jpeg",
 
     ],
 
@@ -30,5 +30,14 @@ return [
 
     [
         "image" => "uploads/seven.jpg",
+    ],
+    [
+        "image" => "uploads/height.jpeg",
+    ],
+    [
+        "image" => "uploads/nine.jpeg",
+    ],
+    [
+        "image" => "uploads/ten.jpeg",
     ],
 ];

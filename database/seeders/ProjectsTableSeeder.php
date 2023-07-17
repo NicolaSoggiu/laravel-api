@@ -22,7 +22,7 @@ class ProjectsTableSeeder extends Seeder
         $types->shift();
         $technologies = Technology::all()->pluck('id');
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $title = $faker->words(rand(2, 10), true);
             $slug = Project::slugger($title);
 
