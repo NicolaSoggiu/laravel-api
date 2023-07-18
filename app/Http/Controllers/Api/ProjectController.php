@@ -9,16 +9,28 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with("type", "technologies")->paginate(6);
-        return response()->json($projects);
+        // filtro dei risultati
+        $searchString = $request->query("q", "");
+
+        $projects = Project::with("type", "technologies")->where("title", "LIKE", "%${searchString}%")->paginate(6);
+        
+        return response()->json([
+            "success"       =>  true,
+            "results"       =>  $projects,
+        
+        ]);
 
     }
 
     public function show($slug)
     {
-        $project = Project::where("slug", $slug)->firstOrFall;
-        return response()->json($slug);
+        $project = Project::where("slug", $slug)->first();
+        
+        return response()->json([
+            "success"        =>    $project ? true : false,
+            "results"        =>    $project,
+        ]);
     }
 }
