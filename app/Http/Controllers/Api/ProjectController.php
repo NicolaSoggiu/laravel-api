@@ -33,4 +33,14 @@ class ProjectController extends Controller
             "results"        =>    $project,
         ]);
     }
+
+    public function random() 
+    {
+        $projects = Project::inRandomOrder()->limit(6)->get();
+        
+        return response()->json([
+            "success"        =>    true,
+            "results"        =>    $projects,
+        ]);
+    }
 }
